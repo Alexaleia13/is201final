@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Songwriting Prompt Generator</title>
+  <style>
+    /* General page styling */
+    body {
+      background-color: #1a1a2e;
+      font-family: 'Georgia', serif;
+      color: #f0e6ff;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Nav bar */
+    .nav-bar {
+      background-color: #16213e;
+      padding: 15px 30px;
+      text-align: center;
+    }
+
+    .nav-bar a {
+      color: #d4aaff;
+      text-decoration: none;
+      margin: 0 15px;
+      font-family: 'Trebuchet MS', sans-serif;
+      font-size: 1.1em;
+    }
+
+    .nav-bar a:hover {
+      color: #ffffff;
+      text-decoration: underline;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 50px 20px 30px;
+    }
+
+    .hero h1 {
+      font-family: 'Trebuchet MS', sans-serif;
+      color: #d4aaff;
+      font-size: 2.8em;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      color: #c9b8e8;
+      font-size: 1.1em;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Main app card */
+    .app-card {
+      background-color: #16213e;
+      border: 2px solid #d4aaff;
+      border-radius: 16px;
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 40px;
+    }
+
+    /* Form labels */
+    label {
+      display: block;
+      color: #d4aaff;
+      font-family: 'Trebuchet MS', sans-serif;
+      margin-bottom: 6px;
+      margin-top: 20px;
+      font-size: 1em;
+    }
+
+    /* Dropdowns and text input */
+    select, input[type="text"] {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid #d4aaff;
+      background-color: #1a1a2e;
+      color: #f0e6ff;
+      font-size: 1em;
+      font-family: 'Georgia', serif;
+      box-sizing: border-box;
+    }
+
+    /* Generate button */
+    .generate-btn {
+      display: block;
+      width: 100%;
+      margin-top: 30px;
+      padding: 14px;
+      background-color: #d4aaff;
+      color: #1a1a2e;
+      font-size: 1.2em;
+      font-family: 'Trebuchet MS', sans-serif;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .generate-btn:hover {
+      background-color: #bf8fff;
+    }
+
+    .generate-btn:disabled {
+      background-color: #7a6a99;
+      cursor: not-allowed;
+    }
+
+    /* Result box */
+    .result-box {
+      margin-top: 30px;
+      background-color: #1a1a2e;
+      border: 1px solid #d4aaff;
+      border-radius: 12px;
+      padding: 24px;
+      display: none;
+    }
+
+    .result-box h3 {
+      font-family: 'Trebuchet MS', sans-serif;
+      color: #d4aaff;
+      margin-top: 0;
+    }
+
+    .result-text {
+      color: #f0e6ff;
+      font-size: 1.05em;
+      line-height: 1.8em;
+      white-space: pre-wrap;
+    }
+
+    /* Loading spinner text */
+    .loading {
+      text-align: center;
+      color: #c9b8e8;
+      font-style: italic;
+      display: none;
+      margin-top: 20px;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: #16213e;
+      text-align: center;
+      padding: 20px;
+      color: #c9b8e8;
+      margin-top: 60px;
+      font-family: 'Trebuchet MS', sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <div class="nav-bar">
+    <a href="index.html">Home</a>
+    <a href="resume.html">Résumé</a>
+    <a href="scratch.html">🎹 My Music Page</a>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <h1>🎵 Songwriting Prompt Generator</h1>
+    <p>
+      Stuck on what to write next? Tell me a little about the song
+      you're imagining and I'll spark some inspiration.
+    </p>
+  </div>
+
+  <!-- APP CARD -->
+  <div class="app-card">
+
+    <!-- MOOD SELECTOR -->
+    <label for="mood">What mood or emotion?</label>
+    <select id="mood">
+      <option value="hopeful">Hopeful</option>
+      <option value="heartbroken">Heartbroken</option>
+      <option value="joyful">Joyful</option>
+      <option value="melancholic">Melancholic</option>
+      <option value="empowered">Empowered</option>
+      <option value="nostalgic">Nostalgic</option>
+      <option value="peaceful">Peaceful</option>
+      <option value="longing">Longing</option>
+    </select>
+
+    <!-- GENRE SELECTOR -->
+    <label for="genre">What genre or style?</label>
+    <select id="genre">
+      <option value="piano ballad">Piano Ballad</option>
+      <option value="pop">Pop</option>
+      <option value="indie folk">Indie Folk</option>
+      <option value="R&B">R&B</option>
+      <option value="gospel">Gospel</option>
+      <option value="classical crossover">Classical Crossover</option>
+      <option value="singer-songwriter">Singer-Songwriter</option>
+    </select>
+
+    <!-- THEME INPUT -->
+    <label for="theme">Any specific theme or topic? (optional)</label>
+    <input
+      type="text"
+      id="theme"
+      placeholder="e.g. missing someone, finding yourself, a late night drive..."
+    />
+
+    <!-- GENERATE BUTTON -->
+    <button class="generate-btn" id="generateBtn" onclick="generatePrompt()">
+      ✨ Generate My Prompt
+    </button>
+
+    <!-- LOADING MESSAGE -->
+    <div class="loading" id="loading">
+      🎵 Crafting your prompt...
+    </div>
+
+    <!-- RESULT BOX -->
+    <div class="result-box" id="resultBox">
+      <h3>Your Songwriting Prompt</h3>
+      <div class="result-text" id="resultText"></div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p>&copy; 2025 Alexa Christiansen</p>
+    <a href="scratch.html" style="color:#d4aaff;">← Back to Music Page</a>
+  </div>
+
+  <script>
+    async function generatePrompt() {
+      // Grab the values from the form
+      const mood = document.getElementById('mood').value;
+      const genre = document.getElementById('genre').value;
+      const theme = document.getElementById('theme').value;
+
+      // Build the prompt we'll send to Claude
+      const userPrompt = `You are a creative songwriting coach helping a piano player and singer write original music.
+
+Generate a detailed and inspiring songwriting prompt based on the following:
+- Mood/Emotion: ${mood}
+- Genre/Style: ${genre}
+- Theme (optional): ${theme || 'open-ended'}
+
+Your response should include:
+1. A evocative title idea for the song
+2. A central image or scene to anchor the song (something visual and specific)
+3. A suggested opening line or lyric fragment
+4. A chord progression or musical feel suggestion (since she plays piano)
+5. One unexpected twist or detail to make the song feel unique
+
+Keep the tone warm, poetic, and encouraging. Format it clearly with each section labeled.`;
+
+      // Show loading, hide old results, disable button
+      const btn = document.getElementById('generateBtn');
+      const loading = document.getElementById('loading');
+      const resultBox = document.getElementById('resultBox');
+      const resultText = document.getElementById('resultText');
+
+      btn.disabled = true;
+      loading.style.display = 'block';
+      resultBox.style.display = 'none';
+      resultText.textContent = '';
+
+      try {
+        // Call the Claude API
+        const response = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            model: 'claude-sonnet-4-20250514',
+            max_tokens: 1000,
+            messages: [
+              { role: 'user', content: userPrompt }
+            ]
+          })
+        });
+
+        const data = await response.json();
+
+        // Pull the text out of the response
+        const output = data.content
+          .map(block => block.type === 'text' ? block.text : '')
+          .join('');
+
+        // Show the result
+        resultText.textContent = output;
+        resultBox.style.display = 'block';
+
+      } catch (error) {
+        resultText.textContent = 'Something went wrong. Please try again!';
+        resultBox.style.display = 'block';
+      }
+
+      // Re-enable button and hide loading
+      btn.disabled = false;
+      loading.style.display = 'none';
+    }
+  </script>
+
+</body>
+</html>

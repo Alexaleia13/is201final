@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Music – Alexa Christiansen</title>
+
+  <!-- Linking our custom stylesheet -->
+  <link rel="stylesheet" href="style.css"/>
+</head>
+
+<body>
+
+  <!-- NAVIGATION back to professional pages -->
+  <div class="nav-bar">
+    <a href="index.html">Home</a>
+    <a href="resume.html">Résumé</a>
+    <a href="app.html">🎵 Songwriting App</a>
+  </div>
+
+  <!-- HERO SECTION -->
+  <div class="hero">
+    <h1>🎹 Music Is My Language</h1>
+    <p>A passion for piano, singing, and the stories songs can tell.</p>
+    <!-- ON-PAGE ANCHOR LINK — jumps down to the influences section -->
+    <a href="#influences" style="color:#d4aaff; font-size:1em;">
+      ↓ Jump to My Influences
+    </a>
+  </div>
+
+  <!-- SECTION 1: MY STORY -->
+  <div class="section">
+    <h2>My Story</h2>
+    <p>
+      Music has been part of my life for as long as I can remember. The piano
+      was my first love — there's something about sitting down at the keys and
+      letting everything else disappear. Singing came naturally alongside it,
+      and together they became my favorite way to express things words alone
+      can't capture.
+    </p>
+    <p>
+      Alongside my accounting degree, I've always dreamed of writing and
+      recording original music. Someday, I want to tell my own stories through
+      song.
+    </p>
+
+    <!-- IMAGE — replace the src with a real image later -->
+    <img
+      class="music-image"
+      src="images/piano.jpg"
+      alt="A piano keyboard"
+    />
+    <!-- 
+      TO ADD YOUR OWN IMAGE:
+      1. Create a folder called "images" inside my-website
+      2. Drop a photo in there
+      3. Change "piano.jpg" to match your filename
+    -->
+  </div>
+
+  <!-- SECTION 2: WHAT I LOVE ABOUT MUSIC (nested list requirement) -->
+  <div class="section">
+    <h2>What I Love About Music</h2>
+    <p>Music touches every part of life. Here's how I think about it:</p>
+
+    <!-- ORDERED LIST with UNORDERED LISTS embedded inside -->
+    <ol>
+      <li>
+        Playing Instruments
+        <ul>
+          <li>Piano — classical and contemporary styles</li>
+          <li>Learning chord progressions by ear</li>
+          <li>Experimenting with melodies I make up</li>
+        </ul>
+      </li>
+      <li>
+        Singing
+        <ul>
+          <li>Vocal harmonies</li>
+          <li>Singing in Spanish from my mission experience</li>
+          <li>Matching emotion to melody</li>
+        </ul>
+      </li>
+      <li>
+        Songwriting
+        <ul>
+          <li>Finding the right words for a feeling</li>
+          <li>Building a song from a single chord</li>
+          <li>Telling stories through lyrics</li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+
+  <!-- SECTION 3: FAVORITE SONG / YOUTUBE VIDEO -->
+  <div class="section">
+    <h2>A Song That Inspires Me</h2>
+    <p>
+      This is one of my favorite performances. The emotion, the simplicity,
+      the piano — it's everything I love about music in one song.
+    </p>
+
+    <!-- EMBEDDED YOUTUBE VIDEO -->
+    <!-- 
+      TO CHANGE THIS VIDEO:
+      1. Go to any YouTube video
+      2. Click Share → Embed
+      3. Copy the src URL (looks like https://www.youtube.com/embed/XXXXXXX)
+      4. Replace the src below with your chosen video
+    -->
+    <div class="video-wrapper">
+      <iframe
+        src="https://www.youtube.com/embed/450p7goxZqg"
+        title="Inspirational piano performance"
+        allowfullscreen>
+      </iframe>
+    </div>
+    <p style="text-align:center; color:#c9b8e8; font-size:0.9em;">
+      "River Flows in You" – Yiruma
+    </p>
+  </div>
+
+  <!-- SECTION 4: MY INFLUENCES — this is the anchor target -->
+  <div class="section">
+    <a name="influences"></a>
+    <div class="anchor-section">
+      <h2 id="influences">🎵 My Musical Influences</h2>
+      <p>
+        These are the artists and styles that shaped how I hear and feel music:
+      </p>
+      <ul>
+        <li>Yiruma — peaceful, emotional piano compositions</li>
+        <li>Adele — raw vocal storytelling</li>
+        <li>Coldplay — the blend of piano and atmosphere</li>
+        <li>Spanish folk music — from my time as a missionary</li>
+        <li>Classic hymns — where my love of harmony began</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SECTION 5: TABLEAU EMBED -->
+  <div class="section">
+    <h2>Music By the Numbers</h2>
+    <p>
+      As an accounting student who loves music, I find data about the music
+      industry fascinating. Here's an interactive look at music trends:
+    </p>
+
+    <!-- 
+      TABLEAU EMBED — REPLACE THIS WITH A REAL ONE:
+      1. Go to https://public.tableau.com/en/gallery
+      2. Find a visualization you like (music, streaming, anything)
+      3. Click it → click "Share" → copy the embed code
+      4. Paste it here replacing the placeholder below
+    -->
+    <div class='tableauPlaceholder' id='viz1776838290532' style='position: relative'><noscript><a href='#'><img alt='Main ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;To&#47;TopSpotifyArtistsandSongs0310&#47;Main&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='TopSpotifyArtistsandSongs0310&#47;Main' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;To&#47;TopSpotifyArtistsandSongs0310&#47;Main&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1776838290532');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='1200px';vizElement.style.height='827px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='1200px';vizElement.style.height='827px';} else { vizElement.style.width='100%';vizElement.style.height='1177px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p>&copy; 2025 Alexa Christiansen</p>
+    <p>
+      <a href="index.html" style="color:#d4aaff;">Back to Home</a>
+    </p>
+  </div>
+
+</body>
+</html>

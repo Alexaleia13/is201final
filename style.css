@@ -1,0 +1,116 @@
+/* style.css — Alexa Christiansen scratch page stylesheet */
+
+/* 1. Body — background color and default font */
+body {
+  background-color: #1a1a2e;
+  font-family: 'Georgia', serif;
+  color: #f0e6ff;
+  margin: 0;
+  padding: 0;
+}
+
+/* 2. Header styling */
+h1, h2, h3 {
+  font-family: 'Trebuchet MS', sans-serif;
+  color: #d4aaff;
+}
+
+/* 3. Navigation bar */
+.nav-bar {
+  background-color: #16213e;
+  padding: 15px 30px;
+  text-align: center;
+}
+
+.nav-bar a {
+  color: #d4aaff;
+  text-decoration: none;
+  margin: 0 15px;
+  font-family: 'Trebuchet MS', sans-serif;
+  font-size: 1.1em;
+}
+
+.nav-bar a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+/* 4. Hero/intro section */
+.hero {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: #16213e;
+  border-bottom: 2px solid #d4aaff;
+}
+
+.hero h1 {
+  font-size: 3em;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 1.2em;
+  color: #c9b8e8;
+}
+
+/* 5. General section wrapper */
+.section {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+/* 6. Image styling */
+.music-image {
+  width: 100%;
+  max-width: 500px;
+  display: block;
+  margin: 20px auto;
+  border-radius: 12px;
+  border: 3px solid #d4aaff;
+}
+
+/* 7. The video wrapper — keeps YouTube video responsive */
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  max-width: 700px;
+  margin: 20px auto;
+  border-radius: 12px;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+}
+
+/* 8. Lists */
+ul, ol {
+  line-height: 2em;
+  color: #e8d5ff;
+}
+
+/* 9. Footer */
+.footer {
+  background-color: #16213e;
+  text-align: center;
+  padding: 20px;
+  color: #c9b8e8;
+  margin-top: 60px;
+  font-family: 'Trebuchet MS', sans-serif;
+}
+
+/* 10. Anchor highlight */
+.anchor-section {
+  background-color: #16213e;
+  border-left: 4px solid #d4aaff;
+  padding: 20px 30px;
+  border-radius: 8px;
+  margin: 30px 0;
+}
