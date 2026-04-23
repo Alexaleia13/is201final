@@ -3,18 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Songwriting Prompt Generator</title>
+  <title>Virtual Piano – Alexa Christiansen</title>
   <style>
-    /* General page styling */
-    body {
-      background-color: #1a1a2e;
-      font-family: 'Georgia', serif;
-      color: #f0e6ff;
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
-    /* Nav bar */
+    body {
+      background-color: #1a1a2e;
+      font-family: 'Trebuchet MS', sans-serif;
+      color: #f0e6ff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Nav */
     .nav-bar {
       background-color: #16213e;
       padding: 15px 30px;
@@ -25,7 +31,6 @@
       color: #d4aaff;
       text-decoration: none;
       margin: 0 15px;
-      font-family: 'Trebuchet MS', sans-serif;
       font-size: 1.1em;
     }
 
@@ -37,112 +42,199 @@
     /* Hero */
     .hero {
       text-align: center;
-      padding: 50px 20px 30px;
+      padding: 40px 20px 20px;
     }
 
     .hero h1 {
-      font-family: 'Trebuchet MS', sans-serif;
       color: #d4aaff;
-      font-size: 2.8em;
+      font-size: 2.5em;
       margin-bottom: 10px;
     }
 
     .hero p {
       color: #c9b8e8;
       font-size: 1.1em;
-      max-width: 600px;
-      margin: 0 auto;
     }
 
-    /* Main app card */
-    .app-card {
-      background-color: #16213e;
-      border: 2px solid #d4aaff;
-      border-radius: 16px;
-      max-width: 700px;
-      margin: 40px auto;
-      padding: 40px;
+    /* Piano container */
+    .piano-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 30px auto;
+      padding: 20px;
     }
 
-    /* Form labels */
-    label {
-      display: block;
-      color: #d4aaff;
-      font-family: 'Trebuchet MS', sans-serif;
-      margin-bottom: 6px;
-      margin-top: 20px;
-      font-size: 1em;
+    /* The actual piano keyboard */
+    .piano {
+      display: flex;
+      position: relative;
+      background-color: #111;
+      padding: 20px 20px 0px 20px;
+      border-radius: 12px 12px 0 0;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+      border: 2px solid #333;
     }
 
-    /* Dropdowns and text input */
-    select, input[type="text"] {
-      width: 100%;
-      padding: 10px 14px;
-      border-radius: 8px;
-      border: 1px solid #d4aaff;
-      background-color: #1a1a2e;
-      color: #f0e6ff;
-      font-size: 1em;
-      font-family: 'Georgia', serif;
-      box-sizing: border-box;
+    /* White keys */
+    .white-key {
+      width: 52px;
+      height: 200px;
+      background: linear-gradient(to bottom, #f5f5f5, #ffffff);
+      border: 1px solid #999;
+      border-radius: 0 0 8px 8px;
+      position: relative;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 10px;
+      transition: background 0.05s;
+      user-select: none;
     }
 
-    /* Generate button */
-    .generate-btn {
-      display: block;
-      width: 100%;
-      margin-top: 30px;
-      padding: 14px;
-      background-color: #d4aaff;
-      color: #1a1a2e;
-      font-size: 1.2em;
+    .white-key:hover {
+      background: linear-gradient(to bottom, #e8d5ff, #f0e6ff);
+    }
+
+    .white-key.active {
+      background: linear-gradient(to bottom, #d4aaff, #e8d5ff);
+      transform: translateY(2px);
+    }
+
+    .white-key .note-name {
+      font-size: 0.75em;
+      color: #666;
       font-family: 'Trebuchet MS', sans-serif;
       font-weight: bold;
-      border: none;
-      border-radius: 10px;
+      pointer-events: none;
+    }
+
+    .white-key.active .note-name {
+      color: #5a3a8a;
+    }
+
+    /* Black keys */
+    .black-key {
+      width: 34px;
+      height: 130px;
+      background: linear-gradient(to bottom, #222, #000);
+      border-radius: 0 0 6px 6px;
+      position: absolute;
       cursor: pointer;
-      transition: background-color 0.2s;
+      z-index: 2;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 8px;
+      transition: background 0.05s;
+      user-select: none;
+      border: 1px solid #000;
+      box-shadow: 2px 4px 8px rgba(0,0,0,0.5);
     }
 
-    .generate-btn:hover {
-      background-color: #bf8fff;
+    .black-key:hover {
+      background: linear-gradient(to bottom, #4a2a7a, #2a1a4a);
     }
 
-    .generate-btn:disabled {
-      background-color: #7a6a99;
-      cursor: not-allowed;
+    .black-key.active {
+      background: linear-gradient(to bottom, #d4aaff, #9966cc);
+      transform: translateY(2px);
     }
 
-    /* Result box */
-    .result-box {
+    .black-key .note-name {
+      font-size: 0.6em;
+      color: #ccc;
+      font-family: 'Trebuchet MS', sans-serif;
+      font-weight: bold;
+      pointer-events: none;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+    }
+
+    .black-key.active .note-name {
+      color: #1a1a2e;
+    }
+
+    /* Piano bottom panel */
+    .piano-bottom {
+      background: linear-gradient(to bottom, #222, #111);
+      width: 100%;
+      max-width: 760px;
+      height: 30px;
+      border-radius: 0 0 12px 12px;
+      border: 2px solid #333;
+      border-top: none;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+    }
+
+    /* Info panel below piano */
+    .info-panel {
       margin-top: 30px;
+      background-color: #16213e;
+      border: 2px solid #d4aaff;
+      border-radius: 12px;
+      padding: 20px 30px;
+      text-align: center;
+      max-width: 760px;
+      width: 100%;
+    }
+
+    .info-panel h3 {
+      color: #d4aaff;
+      margin-bottom: 8px;
+    }
+
+    .note-display {
+      font-size: 2em;
+      color: #ffffff;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Georgia', serif;
+    }
+
+    .hint {
+      color: #c9b8e8;
+      font-size: 0.9em;
+      margin-top: 10px;
+    }
+
+    /* Keyboard shortcuts legend */
+    .legend {
+      margin-top: 20px;
+      max-width: 760px;
+      width: 100%;
+      background-color: #16213e;
+      border-radius: 12px;
+      padding: 20px 30px;
+      border: 1px solid #444;
+    }
+
+    .legend h3 {
+      color: #d4aaff;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .legend p {
+      color: #c9b8e8;
+      font-size: 0.95em;
+      text-align: center;
+      line-height: 1.8em;
+    }
+
+    .key-badge {
+      display: inline-block;
       background-color: #1a1a2e;
       border: 1px solid #d4aaff;
-      border-radius: 12px;
-      padding: 24px;
-      display: none;
-    }
-
-    .result-box h3 {
-      font-family: 'Trebuchet MS', sans-serif;
+      border-radius: 4px;
+      padding: 1px 7px;
+      font-size: 0.85em;
       color: #d4aaff;
-      margin-top: 0;
-    }
-
-    .result-text {
-      color: #f0e6ff;
-      font-size: 1.05em;
-      line-height: 1.8em;
-      white-space: pre-wrap;
-    }
-
-    /* Loading spinner text */
-    .loading {
-      text-align: center;
-      color: #c9b8e8;
-      font-style: italic;
-      display: none;
-      margin-top: 20px;
+      margin: 2px;
     }
 
     /* Footer */
@@ -151,8 +243,12 @@
       text-align: center;
       padding: 20px;
       color: #c9b8e8;
-      margin-top: 60px;
-      font-family: 'Trebuchet MS', sans-serif;
+      margin-top: auto;
+    }
+
+    .footer a {
+      color: #d4aaff;
+      text-decoration: none;
     }
   </style>
 </head>
@@ -168,63 +264,47 @@
 
   <!-- HERO -->
   <div class="hero">
-    <h1>🎵 Songwriting Prompt Generator</h1>
-    <p>
-      Stuck on what to write next? Tell me a little about the song
-      you're imagining and I'll spark some inspiration.
-    </p>
+    <h1>🎹 Virtual Piano</h1>
+    <p>Click the keys or use your keyboard to play!</p>
   </div>
 
-  <!-- APP CARD -->
-  <div class="app-card">
+  <!-- PIANO -->
+  <div class="piano-container">
 
-    <!-- MOOD SELECTOR -->
-    <label for="mood">What mood or emotion?</label>
-    <select id="mood">
-      <option value="hopeful">Hopeful</option>
-      <option value="heartbroken">Heartbroken</option>
-      <option value="joyful">Joyful</option>
-      <option value="melancholic">Melancholic</option>
-      <option value="empowered">Empowered</option>
-      <option value="nostalgic">Nostalgic</option>
-      <option value="peaceful">Peaceful</option>
-      <option value="longing">Longing</option>
-    </select>
+    <div class="piano" id="piano">
+      <!-- Keys are generated by JavaScript below -->
+    </div>
+    <div class="piano-bottom"></div>
 
-    <!-- GENRE SELECTOR -->
-    <label for="genre">What genre or style?</label>
-    <select id="genre">
-      <option value="piano ballad">Piano Ballad</option>
-      <option value="pop">Pop</option>
-      <option value="indie folk">Indie Folk</option>
-      <option value="R&B">R&B</option>
-      <option value="gospel">Gospel</option>
-      <option value="classical crossover">Classical Crossover</option>
-      <option value="singer-songwriter">Singer-Songwriter</option>
-    </select>
-
-    <!-- THEME INPUT -->
-    <label for="theme">Any specific theme or topic? (optional)</label>
-    <input
-      type="text"
-      id="theme"
-      placeholder="e.g. missing someone, finding yourself, a late night drive..."
-    />
-
-    <!-- GENERATE BUTTON -->
-    <button class="generate-btn" id="generateBtn" onclick="generatePrompt()">
-      ✨ Generate My Prompt
-    </button>
-
-    <!-- LOADING MESSAGE -->
-    <div class="loading" id="loading">
-      🎵 Crafting your prompt...
+    <!-- NOTE DISPLAY -->
+    <div class="info-panel">
+      <h3>Now Playing</h3>
+      <div class="note-display" id="noteDisplay">—</div>
+      <p class="hint">Click a key or press a key on your keyboard</p>
     </div>
 
-    <!-- RESULT BOX -->
-    <div class="result-box" id="resultBox">
-      <h3>Your Songwriting Prompt</h3>
-      <div class="result-text" id="resultText"></div>
+    <!-- KEYBOARD LEGEND -->
+    <div class="legend">
+      <h3>⌨️ Keyboard Shortcuts</h3>
+      <p>
+        <span class="key-badge">A</span> C4 &nbsp;
+        <span class="key-badge">W</span> C#4 &nbsp;
+        <span class="key-badge">S</span> D4 &nbsp;
+        <span class="key-badge">E</span> D#4 &nbsp;
+        <span class="key-badge">D</span> E4 &nbsp;
+        <span class="key-badge">F</span> F4 &nbsp;
+        <span class="key-badge">T</span> F#4 &nbsp;
+        <span class="key-badge">G</span> G4 &nbsp;
+        <span class="key-badge">Y</span> G#4 &nbsp;
+        <span class="key-badge">H</span> A4 &nbsp;
+        <span class="key-badge">U</span> A#4 &nbsp;
+        <span class="key-badge">J</span> B4 &nbsp;
+        <span class="key-badge">K</span> C5 &nbsp;
+        <span class="key-badge">O</span> C#5 &nbsp;
+        <span class="key-badge">L</span> D5 &nbsp;
+        <span class="key-badge">P</span> D#5 &nbsp;
+        <span class="key-badge">/</span> E5
+      </p>
     </div>
 
   </div>
@@ -232,85 +312,147 @@
   <!-- FOOTER -->
   <div class="footer">
     <p>&copy; 2025 Alexa Christiansen</p>
-    <a href="scratch.html" style="color:#d4aaff;">← Back to Music Page</a>
+    <a href="scratch.html">← Back to Music Page</a>
   </div>
 
   <script>
-    async function generatePrompt() {
-      // Grab the values from the form
-      const mood = document.getElementById('mood').value;
-      const genre = document.getElementById('genre').value;
-      const theme = document.getElementById('theme').value;
+    // --- PIANO SETUP ---
+    // Define two octaves of notes
+    const notes = [
+      { note: 'C4',  type: 'white', freq: 261.63, key: 'a' },
+      { note: 'C#4', type: 'black', freq: 277.18, key: 'w' },
+      { note: 'D4',  type: 'white', freq: 293.66, key: 's' },
+      { note: 'D#4', type: 'black', freq: 311.13, key: 'e' },
+      { note: 'E4',  type: 'white', freq: 329.63, key: 'd' },
+      { note: 'F4',  type: 'white', freq: 349.23, key: 'f' },
+      { note: 'F#4', type: 'black', freq: 369.99, key: 't' },
+      { note: 'G4',  type: 'white', freq: 392.00, key: 'g' },
+      { note: 'G#4', type: 'black', freq: 415.30, key: 'y' },
+      { note: 'A4',  type: 'white', freq: 440.00, key: 'h' },
+      { note: 'A#4', type: 'black', freq: 466.16, key: 'u' },
+      { note: 'B4',  type: 'white', freq: 493.88, key: 'j' },
+      { note: 'C5',  type: 'white', freq: 523.25, key: 'k' },
+      { note: 'C#5', type: 'black', freq: 554.37, key: 'o' },
+      { note: 'D5',  type: 'white', freq: 587.33, key: 'l' },
+      { note: 'D#5', type: 'black', freq: 622.25, key: 'p' },
+      { note: 'E5',  type: 'white', freq: 659.25, key: '/' },
+      { note: 'F5',  type: 'white', freq: 698.46, key: null },
+      { note: 'F#5', type: 'black', freq: 739.99, key: null },
+      { note: 'G5',  type: 'white', freq: 783.99, key: null },
+      { note: 'G#5', type: 'black', freq: 830.61, key: null },
+      { note: 'A5',  type: 'white', freq: 880.00, key: null },
+      { note: 'A#5', type: 'black', freq: 932.33, key: null },
+      { note: 'B5',  type: 'white', freq: 987.77, key: null },
+    ];
 
-      // Build the prompt we'll send to Claude
-      const userPrompt = `You are a creative songwriting coach helping a piano player and singer write original music.
+    // Audio context for generating sounds
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-Generate a detailed and inspiring songwriting prompt based on the following:
-- Mood/Emotion: ${mood}
-- Genre/Style: ${genre}
-- Theme (optional): ${theme || 'open-ended'}
+    // Build the piano keys in the DOM
+    const piano = document.getElementById('piano');
+    const whiteKeys = notes.filter(n => n.type === 'white');
+    const pianoWidth = whiteKeys.length * 54;
+    piano.style.width = pianoWidth + 'px';
 
-Your response should include:
-1. A evocative title idea for the song
-2. A central image or scene to anchor the song (something visual and specific)
-3. A suggested opening line or lyric fragment
-4. A chord progression or musical feel suggestion (since she plays piano)
-5. One unexpected twist or detail to make the song feel unique
+    // Track white key positions for placing black keys
+    let whiteKeyIndex = 0;
+    const whiteKeyPositions = {};
 
-Keep the tone warm, poetic, and encouraging. Format it clearly with each section labeled.`;
+    // First pass: create white keys
+    notes.forEach((n) => {
+      if (n.type === 'white') {
+        const key = document.createElement('div');
+        key.classList.add('white-key');
+        key.dataset.note = n.note;
+        key.dataset.freq = n.freq;
 
-      // Show loading, hide old results, disable button
-      const btn = document.getElementById('generateBtn');
-      const loading = document.getElementById('loading');
-      const resultBox = document.getElementById('resultBox');
-      const resultText = document.getElementById('resultText');
+        const label = document.createElement('span');
+        label.classList.add('note-name');
+        label.textContent = n.note;
+        key.appendChild(label);
 
-      btn.disabled = true;
-      loading.style.display = 'block';
-      resultBox.style.display = 'none';
-      resultText.textContent = '';
+        key.addEventListener('mousedown', () => playNote(n.freq, n.note, key));
+        piano.appendChild(key);
 
-      try {
-        // Call the Gemini API
-        const response = await fetch(
-          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyBWjeOmpRFiXsjdURKF7C9mUEcc-WgeNOs`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              contents: [
-                {
-                  parts: [
-                    { text: userPrompt }
-                  ]
-                }
-              ]
-            })
-          }
-        );
+        whiteKeyPositions[n.note] = whiteKeyIndex;
+        whiteKeyIndex++;
+      }
+    });
 
-        const data = await response.json();
+    // Second pass: create black keys overlaid on top
+    whiteKeyIndex = 0;
+    notes.forEach((n) => {
+      if (n.type === 'white') {
+        whiteKeyIndex++;
+      } else {
+        // Position black key between the two white keys it sits between
+        const leftOffset = (whiteKeyIndex - 1) * 54 + 20 + 35;
+        const key = document.createElement('div');
+        key.classList.add('black-key');
+        key.dataset.note = n.note;
+        key.dataset.freq = n.freq;
+        key.style.left = leftOffset + 'px';
+        key.style.top = '20px';
 
-        // Pull the text out of the Gemini response
-        const output = data.candidates[0].content.parts
-          .map(part => part.text || '')
-          .join('');
+        const label = document.createElement('span');
+        label.classList.add('note-name');
+        label.textContent = n.note;
+        key.appendChild(label);
 
-        // Show the result
-        resultText.textContent = output;
-        resultBox.style.display = 'block';
+        key.addEventListener('mousedown', () => playNote(n.freq, n.note, key));
+        piano.appendChild(key);
+      }
+    });
 
-      } catch (error) {
-        resultText.textContent = 'Something went wrong. Please try again!';
-        resultBox.style.display = 'block';
+    // --- PLAY A NOTE ---
+    function playNote(freq, noteName, keyEl) {
+      // Resume audio context if suspended (browser requirement)
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
       }
 
-      // Re-enable button and hide loading
-      btn.disabled = false;
-      loading.style.display = 'none';
+      // Create oscillator (the sound wave)
+      const oscillator = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+
+      // Sine wave sounds most like a piano tone
+      oscillator.type = 'sine';
+      oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+      // Fade in and out smoothly like a real piano
+      gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+      gainNode.gain.linearRampToValueAtTime(0.5, audioCtx.currentTime + 0.01);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.5);
+
+      oscillator.start(audioCtx.currentTime);
+      oscillator.stop(audioCtx.currentTime + 1.5);
+
+      // Show note name in display
+      document.getElementById('noteDisplay').textContent = noteName;
+
+      // Visual key press effect
+      keyEl.classList.add('active');
+      setTimeout(() => keyEl.classList.remove('active'), 200);
     }
+
+    // --- KEYBOARD SUPPORT ---
+    const keyMap = {};
+    notes.forEach(n => {
+      if (n.key) keyMap[n.key] = n;
+    });
+
+    document.addEventListener('keydown', (e) => {
+      const n = keyMap[e.key.toLowerCase()];
+      if (!n) return;
+      if (e.repeat) return; // prevent holding key from spamming
+
+      // Find the DOM key element
+      const keyEl = document.querySelector(`[data-note="${n.note}"]`);
+      if (keyEl) playNote(n.freq, n.note, keyEl);
+    });
   </script>
 
 </body>
